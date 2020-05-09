@@ -22,4 +22,10 @@ public class MainActivity extends AppCompatActivity {
         //Mengambil id list view
         songView = (ListView)findViewById(R.id.song_list);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 }
