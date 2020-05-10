@@ -49,4 +49,10 @@ public class MusicService extends Service implements
     public void setList(ArrayList<Song> theSongs){
         songs=theSongs;
     }
+
+    public class MusicBinder extends Binder {
+        MusicService getService() {
+            return MusicService.this;
+        }
+    }
 }
