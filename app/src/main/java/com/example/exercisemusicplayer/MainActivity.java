@@ -132,4 +132,11 @@ public class MainActivity extends AppCompatActivity {
         musicService.setSong(Integer.parseInt(view.getTag().toString()));
         musicService.playSong();
     }
+
+    @Override
+    protected void onDestroy() {
+        stopService(playIntent);
+        musicService=null;
+        super.onDestroy();
+    }
 }
