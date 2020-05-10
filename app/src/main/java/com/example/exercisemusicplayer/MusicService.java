@@ -1,6 +1,7 @@
 package com.example.exercisemusicplayer;
 
 import android.app.Service;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import java.util.ArrayList;
 import android.content.ContentUris;
@@ -54,5 +55,10 @@ public class MusicService extends Service implements
         MusicService getService() {
             return MusicService.this;
         }
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return musicBind;
     }
 }
