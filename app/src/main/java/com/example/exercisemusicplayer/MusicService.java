@@ -22,7 +22,7 @@ public class MusicService extends Service implements
     //song list
     private ArrayList<Song> songs;
     //current position
-    private int songPosn;
+    private int songPos;
 
     private final IBinder musicBind = new MusicBinder();
 

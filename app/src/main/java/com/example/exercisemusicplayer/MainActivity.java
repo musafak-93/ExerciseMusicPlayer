@@ -9,16 +9,26 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ListView;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import android.os.IBinder;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
     //List variable lagu
     private ArrayList<Song> songList;
     private ListView songView;
+    private MusicService musicService;
+    private Intent playIntent;
+    private boolean musicBound=false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
