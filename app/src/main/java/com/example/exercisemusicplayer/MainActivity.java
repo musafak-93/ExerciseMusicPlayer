@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.view.MenuItem;
 import android.view.View;
+import com.example.exercisemusicplayer.MusicService.MusicBinder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -101,5 +102,15 @@ public class MainActivity extends AppCompatActivity {
             musicBound = false;
         }
     };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(playIntent==null){
+            playIntent = new Intent(this, MusicService.class);
+            bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
+            startService(playIntent);
+        }
+    }
 
 }
