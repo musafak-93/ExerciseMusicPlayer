@@ -113,4 +113,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void songPicked(View view){
+        musicService.setSong(Integer.parseInt(view.getTag().toString()));
+        musicService.playSong();
+    }
 }
