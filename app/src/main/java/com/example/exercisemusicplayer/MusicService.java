@@ -74,6 +74,11 @@ public class MusicService extends Service implements
 
     }
 
+    @Override
+    public boolean onError(MediaPlayer mp, int what, int extra) {
+        return false;
+    }
+
     public void playSong(){
         player.reset();
         //get song
