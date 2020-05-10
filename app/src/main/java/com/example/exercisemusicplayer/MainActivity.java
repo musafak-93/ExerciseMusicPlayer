@@ -29,4 +29,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void getSongList() {
+        //retrieve song info
+    }
+
 }
