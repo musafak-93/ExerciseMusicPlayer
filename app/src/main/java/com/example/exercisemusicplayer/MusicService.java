@@ -79,6 +79,12 @@ public class MusicService extends Service implements
         return false;
     }
 
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        //start playback
+        mp.start();
+    }
+
     public void playSong(){
         player.reset();
         //get song
