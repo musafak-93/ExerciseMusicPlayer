@@ -61,4 +61,11 @@ public class MusicService extends Service implements
     public IBinder onBind(Intent intent) {
         return musicBind;
     }
+
+    @Override
+    public boolean onUnbind(Intent intent){
+        player.stop();
+        player.release();
+        return false;
+    }
 }
