@@ -45,4 +45,8 @@ public class MusicService extends Service implements
         player.setOnCompletionListener(this);
         player.setOnErrorListener(this);
     }
+
+    public void setList(ArrayList<Song> theSongs){
+        songs=theSongs;
+    }
 }
