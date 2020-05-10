@@ -85,6 +85,10 @@ public class MusicService extends Service implements
         mp.start();
     }
 
+    public void setSong(int songIndex){
+        songPos=songIndex;
+    }
+
     public void playSong(){
         player.reset();
         //get song
