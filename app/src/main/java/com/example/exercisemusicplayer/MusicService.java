@@ -71,6 +71,11 @@ public class MusicService extends Service implements
     }
 
     @Override
+    public void onDestroy() {
+        stopForeground(true);
+    }
+
+    @Override
     public IBinder onBind(Intent intent) {
         return musicBind;
     }
