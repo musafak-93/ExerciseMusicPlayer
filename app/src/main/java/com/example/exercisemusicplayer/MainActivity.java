@@ -47,7 +47,22 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (checkPermissionREAD_EXTERNAL_STORAGE(this)) {
+            songView = findViewById(R.id.song_list);
+            songList = new ArrayList<Song>();
+            getSongList();
 
+            Collections.sort(songList, new Comparator<Song>(){
+                @Override
+                public int compare(Song a, Song b) {
+                    return a.getTitle().compareTo(b.getTitle());
+                }
+            });
+        }
+
+        SongAdapter songAdapter = new SongAdapter(this, songList);
+        songView.setAdapter(songAdapter);
+        setController();
     }
 
     @Override
