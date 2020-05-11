@@ -197,4 +197,10 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         }
     }
 
+    @Override
+    protected void onStop() {
+        controller.hide();
+        super.onStop();
+    }
+
 }
