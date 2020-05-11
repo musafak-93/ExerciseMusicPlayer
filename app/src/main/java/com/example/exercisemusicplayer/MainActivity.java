@@ -213,7 +213,21 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         alertBuilder.create().show();
     }
 
-
+    public boolean checkPermissionREAD_EXTERNAL_STORAGE(Context context) {
+        if (Build.VERSION.SDK_INT < 23) {
+            return true;
+        }
+        String str = "android.permission.READ_EXTERNAL_STORAGE";
+        if (ContextCompat.checkSelfPermission(context, str) == 0) {
+            return true;
+        }
+        if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, str)) {
+            showDialog("External storage", context, str);
+        } else {
+            ActivityCompat.requestPermissions((Activity) context, new String[]{str}, PERMISSIONS_READ_EXTERNAL);
+        }
+        return false;
+    }
 
     @Override
     protected void onStop() {
