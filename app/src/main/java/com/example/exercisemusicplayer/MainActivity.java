@@ -165,4 +165,21 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         controller.setEnabled(true);
     }
 
+    private void playNext(){
+        musicService.playNext();
+        if(playbackPaused){
+            setController();
+            playbackPaused=false;
+        }
+        controller.show(0);
+    }
+    private void playPrev(){
+        musicService.playPrev();
+        if(playbackPaused){
+            setController();
+            playbackPaused=false;
+        }
+        controller.show(0);
+    }
+
 }
