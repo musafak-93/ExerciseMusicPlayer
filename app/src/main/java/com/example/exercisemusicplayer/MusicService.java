@@ -131,4 +131,11 @@ public class MusicService extends Service implements
     public void go(){
         player.start();
     }
+
+    public void playPrev(){
+        songPos--;
+        if(songPos<0) songPos=songs.size()-1;
+        playSong();
+    }
+
 }
