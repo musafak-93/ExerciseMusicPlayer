@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
     private MusicService musicService;
     private Intent playIntent;
     private boolean musicBound=false;
+    private MusicController controller;
 
 
     @Override
