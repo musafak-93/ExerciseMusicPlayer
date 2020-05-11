@@ -194,6 +194,25 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         }
     }
 
+    public void showDialog(String msg, final Context context, final String permission) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        alertBuilder.setCancelable(true);
+        alertBuilder.setTitle("Permission necessary");
+        StringBuilder sb = new StringBuilder();
+        sb.append(msg);
+        sb.append(" permission is necessary");
+        alertBuilder.setMessage(sb.toString());
+
+        alertBuilder.setPositiveButton(getCurrentPosition(), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ActivityCompat.requestPermissions((Activity) context, new String[]{permission}, MainActivity.PERMISSIONS_READ_EXTERNAL);
+            }
+        });
+
+        alertBuilder.create().show();
+    }
+
 
 
     @Override
