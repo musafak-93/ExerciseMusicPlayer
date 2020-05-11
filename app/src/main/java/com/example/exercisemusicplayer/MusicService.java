@@ -4,6 +4,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import java.util.ArrayList;
+import java.util.Random;
+
 import android.content.ContentUris;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -24,8 +26,12 @@ public class MusicService extends Service implements
     private ArrayList<Song> songs;
     //current position
     private int songPos;
-
     private final IBinder musicBind = new MusicBinder();
+    private String songTitle="";
+    private static final int NOTIFY_ID=1;
+
+    private boolean shuffle=false;
+    private Random rand;
 
     public void onCreate(){
         //create the service
