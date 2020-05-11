@@ -233,4 +233,11 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         else return 0;
     }
 
+    @Override
+    public boolean isPlaying() {
+        if(musicService!=null && musicBound)
+            return musicService.isPng();
+        return false;
+    }
+
 }
