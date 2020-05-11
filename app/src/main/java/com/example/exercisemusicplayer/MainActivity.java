@@ -214,4 +214,9 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         musicService.pausePlayer();
     }
 
+    @Override
+    public void seekTo(int pos) {
+        musicService.seek(pos);
+    }
+
 }
