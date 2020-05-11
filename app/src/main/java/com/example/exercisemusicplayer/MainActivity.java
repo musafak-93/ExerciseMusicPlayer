@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
 
         SongAdapter songAdapter = new SongAdapter(this, songList);
         songView.setAdapter(songAdapter);
+
+        setController();
     }
 
     @Override
