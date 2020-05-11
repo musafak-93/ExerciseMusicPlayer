@@ -1,11 +1,17 @@
 package com.example.exercisemusicplayer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ListView;
@@ -34,28 +40,14 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
     private boolean musicBound=false;
     private MusicController controller;
     private boolean paused=false, playbackPaused=false;
+    public static final int PERMISSIONS_READ_EXTERNAL = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Mengambil id list view
-        songView = (ListView)findViewById(R.id.song_list);
-        songList = new ArrayList<Song>();
-        getSongList();
 
-        Collections.sort(songList, new Comparator<Song>(){
-            @Override
-            public int compare(Song a, Song b) {
-                return a.getTitle().compareTo(b.getTitle());
-            }
-        });
-
-        SongAdapter songAdapter = new SongAdapter(this, songList);
-        songView.setAdapter(songAdapter);
-
-        setController();
     }
 
     @Override
@@ -201,6 +193,8 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
             paused=false;
         }
     }
+
+
 
     @Override
     protected void onStop() {
