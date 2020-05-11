@@ -219,4 +219,11 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         musicService.seek(pos);
     }
 
+    @Override
+    public int getDuration() {
+        if(musicService!=null && musicBound && musicService.isPng())
+            return musicService.getDur();
+        else return 0;
+    }
+
 }
