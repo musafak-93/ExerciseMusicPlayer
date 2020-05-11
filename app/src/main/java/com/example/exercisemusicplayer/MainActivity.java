@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
     private Intent playIntent;
     private boolean musicBound=false;
     private MusicController controller;
-
+    private boolean paused=false, playbackPaused=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
