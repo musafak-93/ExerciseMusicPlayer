@@ -188,4 +188,13 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         paused=true;
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(paused){
+            setController();
+            paused=false;
+        }
+    }
+
 }
