@@ -203,4 +203,15 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         super.onStop();
     }
 
+    @Override
+    public void start() {
+        musicService.go();
+    }
+
+    @Override
+    public void pause() {
+        playbackPaused=true;
+        musicService.pausePlayer();
+    }
+
 }
