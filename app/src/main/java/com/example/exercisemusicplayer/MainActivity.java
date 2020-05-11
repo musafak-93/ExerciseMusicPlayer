@@ -226,4 +226,11 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         else return 0;
     }
 
+    @Override
+    public int getCurrentPosition() {
+        if(musicService!=null && musicBound && musicService.isPng())
+            return musicService.getPosn();
+        else return 0;
+    }
+
 }
