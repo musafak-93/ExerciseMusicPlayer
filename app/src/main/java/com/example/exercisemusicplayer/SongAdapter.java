@@ -9,9 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+// Songadapter digunakan untuk memetakan lagu
 public class SongAdapter extends BaseAdapter {
 
-    //song list and layout
+    // Untuk daftar lagu dan tata letak lagunya
     private ArrayList<Song> songs;
     private LayoutInflater songInf;
 
@@ -21,6 +22,8 @@ public class SongAdapter extends BaseAdapter {
         songInf = LayoutInflater.from(c);
     }
 
+
+    //Method dibawah ini digunakan untuk memetakan lagu
     @Override
     public int getCount() {
         return songs.size();
@@ -38,18 +41,18 @@ public class SongAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        //map to song layout
+        // Untuk tata letak lagu
         LinearLayout songLay = (LinearLayout)songInf.inflate
                 (R.layout.song, parent, false);
-        //get title and artist views
+        // Mendapatkan judul dan tampilan artis
         TextView songView = (TextView)songLay.findViewById(R.id.song_title);
         TextView artistView = (TextView)songLay.findViewById(R.id.song_artist);
-        //get song using position
+        //Mendapatkan lagu menggunakan posisi
         Song currSong = songs.get(position);
-        //get title and artist strings
+        //megubah judul dan artis menjadi string
         songView.setText(currSong.getTitle());
         artistView.setText(currSong.getArtist());
-        //set position as tag
+        // Mengatur posisi sebagai tag
         songLay.setTag(position);
         return songLay;
     }

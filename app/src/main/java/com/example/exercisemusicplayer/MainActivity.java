@@ -3,7 +3,6 @@ package com.example.exercisemusicplayer;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -65,12 +64,14 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         setController();
     }
 
+    //Untuk memanggil menu di activity main
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
+    // Action untuk menu shuffle dan end
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -87,20 +88,21 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
     }
 
     public void getSongList() {
-        //retrieve song info
+        // Untuk mengambil info lagu
         ContentResolver musicResolver = getContentResolver();
         Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         @SuppressLint("Recycle") Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
 
         if(musicCursor!=null && musicCursor.moveToFirst()){
-            //get columns
+            // Menngambil column untuk lagu
             int titleColumn = musicCursor.getColumnIndex
                     (android.provider.MediaStore.Audio.Media.TITLE);
             int idColumn = musicCursor.getColumnIndex
                     (android.provider.MediaStore.Audio.Media._ID);
             int artistColumn = musicCursor.getColumnIndex
                     (android.provider.MediaStore.Audio.Media.ARTIST);
-            //add songs to list
+
+            // Menambahkan lagu pada listview
             do {
                 long thisId = musicCursor.getLong(idColumn);
                 String thisTitle = musicCursor.getString(titleColumn);
@@ -112,15 +114,15 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
 
     }
 
-    //connect to the service
+    // Menghubungkan ke service music
     private ServiceConnection musicConnection = new ServiceConnection(){
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             MusicService.MusicBinder binder = (MusicService.MusicBinder)service;
-            //get service
+            // Mengambil service
             musicService = binder.getService();
-            //pass list
+            // Mengambil lagu
             musicService.setList(songList);
             musicBound = true;
         }
@@ -131,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         }
     };
 
+    // Untuk memulai objek ketika objek dimulai
     @Override
     protected void onStart() {
         super.onStart();
@@ -141,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         }
     }
 
+    // Mengambil lagu
     public void songPicked(View view){
         musicService.setSong(Integer.parseInt(view.getTag().toString()));
         musicService.playSong();
@@ -151,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         controller.show(0);
     }
 
+    // Untuk mengakhiri aplikasi
     @Override
     protected void onDestroy() {
         stopService(playIntent);
@@ -158,25 +163,31 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         super.onDestroy();
     }
 
+    // Mengatur controller music
     private void setController(){
         //set the controller up
         controller = new MusicController(this);
         controller.setPrevNextListeners(new View.OnClickListener() {
             @Override
+            // Action ketika pengguna menakan tombol next
             public void onClick(View v) {
                 playNext();
             }
         }, new View.OnClickListener() {
             @Override
+            // Action ketika pengguna menekan tombol previous
             public void onClick(View v) {
                 playPrev();
             }
         });
+
+        // Tempat tampilan controller di panggil
         controller.setMediaPlayer(this);
         controller.setAnchorView(findViewById(R.id.song_list));
         controller.setEnabled(true);
     }
 
+    // Untuk melewati lagu ke selanjutnya
     private void playNext(){
         musicService.playNext();
         if(playbackPaused){
@@ -185,6 +196,8 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         }
         controller.show(0);
     }
+
+    // Untuk memutar music sebelumnya
     private void playPrev(){
         musicService.playPrev();
         if(playbackPaused){
@@ -194,12 +207,16 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         controller.show(0);
     }
 
+
+    // Untuk menjeda music
     @Override
     protected void onPause(){
         super.onPause();
         paused=true;
     }
 
+
+    // Untuk melanjutkan music kembali
     @Override
     protected void onResume(){
         super.onResume();
@@ -209,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         }
     }
 
+    // Untuk Alert dialog izin aplikasi untuk akses memori external device
     public void showDialog(String msg, final Context context, final String permission) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
         alertBuilder.setCancelable(true);
@@ -228,6 +246,7 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         alertBuilder.create().show();
     }
 
+    // Untuk mengecek permission
     public boolean checkPermissionREAD_EXTERNAL_STORAGE(Context context) {
         if (Build.VERSION.SDK_INT < 23) {
             return true;
@@ -244,12 +263,14 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         return false;
     }
 
+    // Menyembuyikan controller
     @Override
     protected void onStop() {
         controller.hide();
         super.onStop();
     }
 
+    // akses ke musiservice
     @Override
     public void start() {
         musicService.go();
@@ -266,6 +287,7 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         musicService.seek(pos);
     }
 
+    // Untuk mengetahui durasi musik yang diputar
     @Override
     public int getDuration() {
         if(musicService!=null && musicBound && musicService.isPng())
@@ -273,6 +295,7 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         else return 0;
     }
 
+    //Untuk mendapatkan posisi music saat ini
     @Override
     public int getCurrentPosition() {
         if(musicService!=null && musicBound && musicService.isPng())
@@ -280,6 +303,7 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         else return 0;
     }
 
+    // action ketika  music di play
     @Override
     public boolean isPlaying() {
         if(musicService!=null && musicBound)

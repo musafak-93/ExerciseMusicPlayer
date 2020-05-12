@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import java.util.ArrayList;
 import java.util.Random;
-
 import android.content.ContentUris;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -22,36 +21,37 @@ public class MusicService extends Service implements
 
     //media player
     private MediaPlayer player;
-    //song list
+    //Daftar lagu
     private ArrayList<Song> songs;
     //current position
     private int songPos;
     private final IBinder musicBind = new MusicBinder();
     private String songTitle="";
     private static final int NOTIFY_ID=1;
-
     private boolean shuffle=false;
     private Random rand;
 
     public void onCreate(){
-        //create the service
+        // Membuat service
         super.onCreate();
-        //initialize position
+        // Inisialisasi posisi
         songPos=0;
-        //create player
+        //membuat tampilan
         player = new MediaPlayer();
         initMusicPlayer();
 
         rand=new Random();
     }
 
+    // Untuk button shuflle
     public void setShuffle(){
         if(shuffle) shuffle=false;
         else shuffle=true;
     }
 
     public void initMusicPlayer(){
-        //set player properties
+        // Mengatur properti yang dibutuhkan
+        // Wake Lock memungkinkan bermain musik ketika dalam dalam mode siaga
         player.setWakeMode(getApplicationContext(),
                 PowerManager.PARTIAL_WAKE_LOCK);
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -60,16 +60,20 @@ public class MusicService extends Service implements
         player.setOnErrorListener(this);
     }
 
+    // Untuk mengrimkan ke playlist
     public void setList(ArrayList<Song> theSongs){
         songs=theSongs;
     }
 
+
+    // Memanggil method Musicservice
     public class MusicBinder extends Binder {
         MusicService getService() {
             return MusicService.this;
         }
     }
 
+    // Memanggil method setForeground
     @Override
     public void onDestroy() {
         stopForeground(true);
@@ -103,7 +107,7 @@ public class MusicService extends Service implements
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        //start playback
+        //mulai playbac
         mp.start();
     }
 
@@ -113,23 +117,25 @@ public class MusicService extends Service implements
 
     public void playSong(){
         player.reset();
-        //get song
+        //Mendapatkan lagu
         Song playSong = songs.get(songPos);
-        //get id
+        //Mendapatkan id
         long currSong = playSong.getID();
-        //set uri
+        //Mengatur uri
         Uri trackUri = ContentUris.withAppendedId(
                 android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 currSong);
         try{
             player.setDataSource(getApplicationContext(), trackUri);
         }
+        // alternative jika url eror
         catch(Exception e){
             Log.e("MUSIC SERVICE", "Error setting data source", e);
         }
         player.prepareAsync();
     }
 
+    // Method dibawah ini digunakan untuk control music
     public int getPosn(){
         return player.getCurrentPosition();
     }
@@ -160,6 +166,7 @@ public class MusicService extends Service implements
         playSong();
     }
 
+    // Mengaktifkan pengaturan shuffle dan mematikannya
     public void playNext(){
         if(shuffle){
             int newSong = songPos;

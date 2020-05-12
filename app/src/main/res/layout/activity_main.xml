@@ -8,11 +8,9 @@
     android:background="#FA5C51"
     tools:context=".MainActivity">
 
+    // Listview digunakan untuk tempat list music yang diambil dari memori external device
     <ListView
         android:id="@+id/song_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"></ListView>
-
-
-
 </LinearLayout>

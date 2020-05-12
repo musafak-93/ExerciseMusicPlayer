@@ -2,8 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.exercisemusicplayer">
 
+    // permission untuk mengakses file dalam perangkat penyimpanan
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    //permission untuk mencegah device ke mode sleep
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    // permission untuk mengakses file dalam perangkat penyimpanan eksternal
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
@@ -22,6 +27,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        //Untuk mengakses ke musicservice
         <service android:name=".MusicService" />
     </application>
 
